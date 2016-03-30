@@ -2,24 +2,39 @@
 <html ng-app="contactManagerApp">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Angular Material</title>
 
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="bower_components/angular-material-icons/angular-material-icons.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="assets/app.css" media="screen" title="no title" charset="utf-8">
 
   </head>
-  <body ng-cloak ng-controller="mainController as vm">
+  <body layout="row" ng-cloak ng-controller="mainController as vm">
 
-    <h1>Hello Angular Material</h1>
-    {{ vm.message }}
+    <div ng-include="'dist/views/sidenav.html'" layout="vertical">
+    </div>
+
+    <div layout="column" flex>
+      <div ng-include="'dist/views/toolbar-header.html'">
+      </div>
+      <md-content flex id="content">
+        <div ng-include="'dist/views/main-content.html'"></div>
+      </md-content>
+    </div>
+
+
 
     <script src="bower_components/angular/angular.min.js" charset="utf-8"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js" charset="utf-8"></script>
     <script src="bower_components/angular-aria/angular-aria.min.js" charset="utf-8"></script>
     <script src="bower_components/angular-material/angular-material.js" charset="utf-8"></script>
+    <script src="bower_components/angular-material-icons/angular-material-icons.min.js" charset="utf-8"></script>
 
+    <script src="dist/models.js" charset="utf-8"></script>
     <script src="dist/controllers/mainController.js" charset="utf-8"></script>
+    <script src="dist/services/userService.js" charset="utf-8"></script>
     <script src="dist/boot.js" charset="utf-8"></script>
   </body>
 </html>

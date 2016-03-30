@@ -2,7 +2,16 @@
 var ContactManagerApp;
 (function (ContactManagerApp) {
     angular
-        .module('contactManagerApp', ['ngMaterial'])
-        .controller('mainController', ContactManagerApp.MainController);
+        .module('contactManagerApp', ['ngMaterial', 'ngMdIcons'])
+        .service('userService', ContactManagerApp.UserService)
+        .controller('mainController', ContactManagerApp.MainController)
+        .config(function ($mdIconProvider, $mdThemingProvider) {
+        $mdIconProvider
+            .defaultIconSet('./assets/svg/avatars.svg', 128)
+            .icon('menu', './assets/svg/menu.svg', 24);
+        $mdThemingProvider.theme('default')
+            .primaryPalette('red')
+            .accentPalette('blue');
+    });
 })(ContactManagerApp || (ContactManagerApp = {}));
 //# sourceMappingURL=boot.js.map

@@ -1,0 +1,40 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+md-toolbar h1 {
+  font-size: 1.250em;
+  font-weight: 400;
+  margin: auto;
+}
+
+md-toolbar .md-toolbar-tools h1 {
+  font-size: 1.250em;
+  font-weight: 400;
+}
+
+#content {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+}
+
+.avatar {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  border: 1px solid #DDD;
+  border-radius: 50%;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+  vertical-align: middle;
+  zoom: 0.70;
+  transform: translateZ();
+  -webkit-transform: scale(0.70);
+  -moz-transform: scale(0.70);
+}

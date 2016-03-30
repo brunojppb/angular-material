@@ -3,7 +3,18 @@
 module ContactManagerApp {
 
   angular
-    .module('contactManagerApp', ['ngMaterial'])
-    .controller('mainController',ContactManagerApp.MainController);
+    .module('contactManagerApp', ['ngMaterial', 'ngMdIcons'])
+    .service('userService', UserService)
+    .controller('mainController',ContactManagerApp.MainController)
+    .config(($mdIconProvider: angular.material.IIconProvider,
+              $mdThemingProvider: angular.material.IThemingProvider) => {
+      $mdIconProvider
+        .defaultIconSet('./assets/svg/avatars.svg', 128)
+        .icon('menu', './assets/svg/menu.svg', 24);
+
+      $mdThemingProvider.theme('default')
+        .primaryPalette('red')
+        .accentPalette('blue');
+    });
 
 }
