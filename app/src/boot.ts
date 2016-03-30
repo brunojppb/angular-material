@@ -9,7 +9,7 @@ module ContactManagerApp {
     .config(($mdIconProvider: angular.material.IIconProvider,
               $mdThemingProvider: angular.material.IThemingProvider) => {
       $mdIconProvider
-        .defaultIconSet('./assets/svg/avatars.svg', 128)
+        .defaultIconSet('./assets/svg/avatars.svg', 128) 
         .icon('menu', './assets/svg/menu.svg', 24);
 
       $mdThemingProvider.theme('default')

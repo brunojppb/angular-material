@@ -10,7 +10,7 @@
       md-min-length="3"
       placeholder="filter">
       <md-item-template>
-        <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}}</span>
+        <span md-highlight-text="vm.searchText" md-highlight-flags="^i" ng-click="vm.selectUser(item)">{{item.name}}</span>
       <md-item-template>
         <md-not-found>
           No user matching "{{vm.searchText}}" were found.

@@ -21,6 +21,16 @@
       </div>
       <md-content flex id="content">
         <div ng-include="'dist/views/main-content.html'"></div>
+        <md-tabs md-selected="vm.tabIndex"
+                  md-stretch-tabs="always"
+                  md-dynamic-height="">
+          <md-tab label="Bio">
+            <div ng-include="'dist/views/tab-bio.html'"></div>
+          </md-tab>
+          <md-tab label="Notes">
+            <div ng-include="'dist/views/tab-notes.html'"></div>
+          </md-tab>
+        </md-tabs>
       </md-content>
     </div>
 

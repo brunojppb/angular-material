@@ -3,12 +3,14 @@ module ContactManagerApp {
 
     static $inject = [
       'userService',
-      '$mdSidenav'
+      '$mdSidenav',
+      '$mdToast'
     ];
 
     constructor(
       private userService: IUserService,
-      private $mdSidenav: angular.material.ISidenavService) {
+      private $mdSidenav: angular.material.ISidenavService,
+      private $mdToast: angular.material.IToastService) {
       var self = this;
 
       this.userService
@@ -24,6 +26,7 @@ module ContactManagerApp {
     selected: User = null;
     message: string = "Hello from main controller";
     searchText: string = '';
+    tabIndex: number = 0;
 
     toggleSidenav(): void {
       this.$mdSidenav('left').toggle();
@@ -35,6 +38,22 @@ module ContactManagerApp {
       if(sidenav.isOpen()) {
         sidenav.close();
       }
+      this.tabIndex = 0;
+    }
+
+    removeNote(note: Note): void {
+      var foundIndex = this.selected.notes.indexOf(note);
+      this.selected.notes.splice(foundIndex, 1);
+      this.openToast('Note removed.');
+    }
+
+    openToast(message: string): void {
+      this.$mdToast.show(
+        this.$mdToast.simple()
+          .textContent(message)
+          .position('top left')
+          .hideDelay(3000)
+      );
     }
 
   }
