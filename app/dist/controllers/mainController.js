@@ -1,10 +1,11 @@
 var ContactManagerApp;
 (function (ContactManagerApp) {
     var MainController = (function () {
-        function MainController(userService, $mdSidenav, $mdToast) {
+        function MainController(userService, $mdSidenav, $mdToast, $mdDialog) {
             this.userService = userService;
             this.$mdSidenav = $mdSidenav;
             this.$mdToast = $mdToast;
+            this.$mdDialog = $mdDialog;
             this.users = [];
             this.selected = null;
             this.message = "Hello from main controller";
@@ -35,6 +36,19 @@ var ContactManagerApp;
             this.selected.notes.splice(foundIndex, 1);
             this.openToast('Note removed.');
         };
+        MainController.prototype.clearNotes = function ($event) {
+            var confirm = this.$mdDialog.confirm()
+                .title('Are you sure you want to delete all notes?')
+                .textContent('All notes will be deleted')
+                .targetEvent($event)
+                .ok('Yes')
+                .cancel('No');
+            var self = this;
+            this.$mdDialog.show(confirm).then(function () {
+                self.selected.notes = [];
+                self.openToast('All notes deleted');
+            });
+        };
         MainController.prototype.openToast = function (message) {
             this.$mdToast.show(this.$mdToast.simple()
                 .textContent(message)
@@ -44,7 +58,8 @@ var ContactManagerApp;
         MainController.$inject = [
             'userService',
             '$mdSidenav',
-            '$mdToast'
+            '$mdToast',
+            '$mdDialog'
         ];
         return MainController;
     }());

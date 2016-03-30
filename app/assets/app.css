@@ -23,6 +23,10 @@ md-toolbar .md-toolbar-tools h1 {
   padding-top: 5px;
 }
 
+#content md-icon.avatar {
+  margin-top: 10px;
+}
+
 .avatar {
   position: relative;
   width: 128px;
@@ -37,4 +41,13 @@ md-toolbar .md-toolbar-tools h1 {
   transform: translateZ();
   -webkit-transform: scale(0.70);
   -moz-transform: scale(0.70);
+}
+
+.scrollable-nav-content {
+  position: absolute;
+  top: 136px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: auto;
 }

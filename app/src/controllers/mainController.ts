@@ -4,13 +4,15 @@ module ContactManagerApp {
     static $inject = [
       'userService',
       '$mdSidenav',
-      '$mdToast'
+      '$mdToast',
+      '$mdDialog'
     ];
 
     constructor(
       private userService: IUserService,
       private $mdSidenav: angular.material.ISidenavService,
-      private $mdToast: angular.material.IToastService) {
+      private $mdToast: angular.material.IToastService,
+      private $mdDialog: angular.material.IDialogService) {
       var self = this;
 
       this.userService
@@ -45,6 +47,21 @@ module ContactManagerApp {
       var foundIndex = this.selected.notes.indexOf(note);
       this.selected.notes.splice(foundIndex, 1);
       this.openToast('Note removed.');
+    }
+
+    clearNotes($event) {
+      var confirm = this.$mdDialog.confirm()
+        .title('Are you sure you want to delete all notes?')
+        .textContent('All notes will be deleted')
+        .targetEvent($event)
+        .ok('Yes')
+        .cancel('No');
+
+        var self = this;
+        this.$mdDialog.show(confirm).then(() => {
+          self.selected.notes = [];
+          self.openToast('All notes deleted');
+        });
     }
 
     openToast(message: string): void {
