@@ -1,0 +1,21 @@
+{
+  "name": "angular-material",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Bruno Paulino <brunojppb@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/brunojppb/angular-material",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.0.6"
+  }
+}
