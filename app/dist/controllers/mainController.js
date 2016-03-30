@@ -41,7 +41,7 @@ var ContactManagerApp;
         MainController.prototype.showContactOptions = function ($event) {
             this.$mdBottomSheet.show({
                 parent: angular.element(document.getElementById('wrapper')),
-                templateUrl: '/views/contactSheet.html',
+                templateUrl: 'angular-material/views/contactSheet.html',
                 controller: ContactManagerApp.ContactPanelController,
                 controllerAs: 'cp',
                 bindToController: true,
@@ -57,7 +57,7 @@ var ContactManagerApp;
             // if not, show dialog
             var useFullScreen = (this.$mdMedia('sm') || this.$mdMedia('xs'));
             this.$mdDialog.show({
-                templateUrl: '/views/newUserDialog.html',
+                templateUrl: 'angular-material/views/newUserDialog.html',
                 parent: angular.element(document.body),
                 targetEvent: $event,
                 controller: ContactManagerApp.AddNewUserDialogController,
