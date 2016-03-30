@@ -2,7 +2,7 @@
 var ContactManagerApp;
 (function (ContactManagerApp) {
     angular
-        .module('contactManagerApp', ['ngMaterial', 'ngMdIcons'])
+        .module('contactManagerApp', ['ngMaterial', 'ngMdIcons', 'ngMessages'])
         .service('userService', ContactManagerApp.UserService)
         .controller('mainController', ContactManagerApp.MainController)
         .controller('addNewUserDialogController', ContactManagerApp.AddNewUserDialogController)

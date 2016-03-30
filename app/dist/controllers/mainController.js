@@ -13,6 +13,7 @@ var ContactManagerApp;
             this.message = "Hello from main controller";
             this.searchText = '';
             this.tabIndex = 0;
+            this.newNote = new ContactManagerApp.Note('', null);
             var self = this;
             this.userService
                 .loadAllUsers()
@@ -22,6 +23,9 @@ var ContactManagerApp;
                 console.log(self.users);
             });
         }
+        MainController.prototype.setFormScope = function (scope) {
+            this.formScope = scope;
+        };
         MainController.prototype.toggleSidenav = function () {
             this.$mdSidenav('left').toggle();
         };
@@ -61,6 +65,8 @@ var ContactManagerApp;
                 clickOutsideToClose: true,
                 fullscreen: useFullScreen
             }).then(function (user) {
+                var newUser = ContactManagerApp.User.fromCreate(user);
+                self.users.push(newUser);
                 self.openToast('User has been created');
             }, function () {
                 console.log('You cancelled the dialog');
@@ -70,6 +76,14 @@ var ContactManagerApp;
             var foundIndex = this.selected.notes.indexOf(note);
             this.selected.notes.splice(foundIndex, 1);
             this.openToast('Note removed.');
+        };
+        MainController.prototype.addNote = function () {
+            this.selected.notes.push(this.newNote);
+            this.newNote = new ContactManagerApp.Note('', null);
+            this.openToast("Note added");
+            // Reset note form
+            this.formScope.noteForm.$setUntouched();
+            this.formScope.noteForm.$setPristine();
         };
         MainController.prototype.clearNotes = function ($event) {
             var confirm = this.$mdDialog.confirm()
