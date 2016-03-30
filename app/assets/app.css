@@ -51,3 +51,9 @@ md-toolbar .md-toolbar-tools h1 {
   width: 100%;
   overflow: auto;
 }
+
+span.name {
+  font-weight: bold;
+  font-size: 1.1em;
+  padding-left: 5px;
+}

@@ -16,7 +16,7 @@
     <div ng-include="'dist/views/sidenav.html'" layout="vertical">
     </div>
 
-    <div layout="column" flex>
+    <div layout="column" flex id="wrapper">
       <div ng-include="'dist/views/toolbar-header.html'">
       </div>
       <md-content flex id="content">
@@ -44,6 +44,8 @@
 
     <script src="dist/models.js" charset="utf-8"></script>
     <script src="dist/controllers/mainController.js" charset="utf-8"></script>
+    <script src="dist/controllers/addNewUserDialogController.js" charset="utf-8"></script>
+    <script src="dist/controllers/contactPanelController.js" charset="utf-8"></script>
     <script src="dist/services/userService.js" charset="utf-8"></script>
     <script src="dist/boot.js" charset="utf-8"></script>
   </body>

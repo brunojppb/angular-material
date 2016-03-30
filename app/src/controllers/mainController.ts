@@ -5,21 +5,25 @@ module ContactManagerApp {
       'userService',
       '$mdSidenav',
       '$mdToast',
-      '$mdDialog'
+      '$mdDialog',
+      '$mdMedia',
+      '$mdBottomSheet'
     ];
 
     constructor(
       private userService: IUserService,
       private $mdSidenav: angular.material.ISidenavService,
       private $mdToast: angular.material.IToastService,
-      private $mdDialog: angular.material.IDialogService) {
+      private $mdDialog: angular.material.IDialogService,
+      private $mdMedia: angular.material.IMedia,
+      private $mdBottomSheet: angular.material.IBottomSheetService) {
       var self = this;
 
       this.userService
         .loadAllUsers()
         .then((users: User[]) => {
           self.users = users;
-          self.selected = users[0];
+          self.selectUser(users[0]);
           console.log(self.users);
         });
     }
@@ -36,11 +40,48 @@ module ContactManagerApp {
 
     selectUser(user: User): void {
       this.selected = user;
+      this.userService.selectedUser = this.selected;
       var sidenav = this.$mdSidenav('left');
       if(sidenav.isOpen()) {
         sidenav.close();
       }
       this.tabIndex = 0;
+    }
+
+    showContactOptions($event) {
+      this.$mdBottomSheet.show({
+        parent: angular.element(document.getElementById('wrapper')),
+        templateUrl: '../dist/views/contactSheet.html',
+        controller: ContactPanelController,
+        controllerAs: 'cp',
+        bindToController: true,
+        targetEvent: $event
+      }).then((clickItem) => {
+        clickItem && console.log(clickItem.name + 'clicked!');
+      });
+    }
+
+    addUser($event) {
+      var self = this;
+      // Check device screen
+      // if it is a mobile device, show full screen dialog
+      // if not, show dialog
+      var useFullScreen = (this.$mdMedia('sm') || this.$mdMedia('xs'));
+
+      this.$mdDialog.show({
+        templateUrl: '../dist/views/newUserDialog.html',
+        parent: angular.element(document.body),
+        targetEvent: $event,
+        controller: AddNewUserDialogController,
+        controllerAs: 'ctrl',
+        clickOutsideToClose: true,
+        fullscreen: useFullScreen
+      }).then((user: User) => {
+        self.openToast('User has been created');
+      }, () => {
+        console.log('You cancelled the dialog');
+      });
+
     }
 
     removeNote(note: Note): void {
@@ -68,7 +109,7 @@ module ContactManagerApp {
       this.$mdToast.show(
         this.$mdToast.simple()
           .textContent(message)
-          .position('top left')
+          .position("top right")
           .hideDelay(3000)
       );
     }

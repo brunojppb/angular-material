@@ -1,11 +1,13 @@
 var ContactManagerApp;
 (function (ContactManagerApp) {
     var MainController = (function () {
-        function MainController(userService, $mdSidenav, $mdToast, $mdDialog) {
+        function MainController(userService, $mdSidenav, $mdToast, $mdDialog, $mdMedia, $mdBottomSheet) {
             this.userService = userService;
             this.$mdSidenav = $mdSidenav;
             this.$mdToast = $mdToast;
             this.$mdDialog = $mdDialog;
+            this.$mdMedia = $mdMedia;
+            this.$mdBottomSheet = $mdBottomSheet;
             this.users = [];
             this.selected = null;
             this.message = "Hello from main controller";
@@ -16,7 +18,7 @@ var ContactManagerApp;
                 .loadAllUsers()
                 .then(function (users) {
                 self.users = users;
-                self.selected = users[0];
+                self.selectUser(users[0]);
                 console.log(self.users);
             });
         }
@@ -25,11 +27,44 @@ var ContactManagerApp;
         };
         MainController.prototype.selectUser = function (user) {
             this.selected = user;
+            this.userService.selectedUser = this.selected;
             var sidenav = this.$mdSidenav('left');
             if (sidenav.isOpen()) {
                 sidenav.close();
             }
             this.tabIndex = 0;
+        };
+        MainController.prototype.showContactOptions = function ($event) {
+            this.$mdBottomSheet.show({
+                parent: angular.element(document.getElementById('wrapper')),
+                templateUrl: '../dist/views/contactSheet.html',
+                controller: ContactManagerApp.ContactPanelController,
+                controllerAs: 'cp',
+                bindToController: true,
+                targetEvent: $event
+            }).then(function (clickItem) {
+                clickItem && console.log(clickItem.name + 'clicked!');
+            });
+        };
+        MainController.prototype.addUser = function ($event) {
+            var self = this;
+            // Check device screen
+            // if it is a mobile device, show full screen dialog
+            // if not, show dialog
+            var useFullScreen = (this.$mdMedia('sm') || this.$mdMedia('xs'));
+            this.$mdDialog.show({
+                templateUrl: '../dist/views/newUserDialog.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                controller: ContactManagerApp.AddNewUserDialogController,
+                controllerAs: 'ctrl',
+                clickOutsideToClose: true,
+                fullscreen: useFullScreen
+            }).then(function (user) {
+                self.openToast('User has been created');
+            }, function () {
+                console.log('You cancelled the dialog');
+            });
         };
         MainController.prototype.removeNote = function (note) {
             var foundIndex = this.selected.notes.indexOf(note);
@@ -52,14 +87,16 @@ var ContactManagerApp;
         MainController.prototype.openToast = function (message) {
             this.$mdToast.show(this.$mdToast.simple()
                 .textContent(message)
-                .position('top left')
+                .position("top right")
                 .hideDelay(3000));
         };
         MainController.$inject = [
             'userService',
             '$mdSidenav',
             '$mdToast',
-            '$mdDialog'
+            '$mdDialog',
+            '$mdMedia',
+            '$mdBottomSheet'
         ];
         return MainController;
     }());
